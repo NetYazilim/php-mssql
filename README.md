@@ -2,7 +2,7 @@
 
 This image provides an integrated development environment for PHP with connectivity to a remote SQL Server database.
 
-### [Dockerfile](https://github.com/NetYazilim/php-mssql/blob/master/Dockerfile)
+### [Dockerfile](https://github.com/netyazilim/php-mssql/blob/master/Dockerfile)
 
 The following components are included:
 - Centos 7 OS layer.
@@ -14,8 +14,12 @@ The following components are included:
 - Installed PHP modules (php-fpm, php-cli, php-gd, php-intl, php-json, php-ldap, php-mbstring, php-mcrypt, php-opcache, php-pdo, php-pecl-zip, php-soap, php-sqlsrv, php-xml, php-mysqlnd, php-pecl-uuid, php-bcmath, mediainfo, openldap-clients, php-mhash, php-xsl, php-pear, php-soap)
 - [Microsoft ODBC Driver 17.2 for Linux] (https://blogs.msdn.microsoft.com/sqlnativeclient/2018/07/11/odbc-driver-17-2-for-sql-server-released/)
 - [Microsoft Drivers for PHP for SQL Server 5.3] (https://docs.microsoft.com/en-us/sql/connect/php/release-notes-for-the-php-sql-driver?view=sql-server-2017#whats-new-in-version-53)
+
 ## Settings
-Loaded Configuration File : /etc/php.ini  
-Scan this dir for additional .ini files : /etc/php.d  
-php_error_log : /var/log/php-fpm/php-error.log  
-www_error_log : /var/log/php-fpm/www-error.log
+CFG_INCLUDE environment varible for conf file. Default value is "/etc/opt/remi/php72/php-fpm.d/*.conf"
+
+### [exmple conf file](https://github.com/netyazilim/php-mssql/blob/master/www.conf)
+```
+docker run -v c:\demo:/shared -p 9000:9000 -e CFG_INCLUDE=/shared/etc/php/*.conf netyazilim/php-mssql
+
+```

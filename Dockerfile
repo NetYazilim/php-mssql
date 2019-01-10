@@ -1,7 +1,9 @@
 FROM centos:7
 LABEL maintainer "Levent SAGIROGLU <LSagiroglu@gmail.com>"
+
 EXPOSE 9000
-ENV ERROR_LOG "/var/opt/remi/php72/log/php-fpm/www-error.log"
+
+ENV CFG_INCLUDE "/etc/opt/remi/php72/php-fpm.d/*.conf"
 
 RUN \
     yum -y update wget yum-utils&& \
@@ -32,24 +34,20 @@ RUN yum-config-manager --enable extras && \
            php72-php-mcrypt \
            php72-php-pecl-zip \
            php72-php-soap \
-           php72-php-intl
+           php72-php-intl && \
 
 # for last version info : https://packages.microsoft.com/rhel/7/prod/
 
-RUN ACCEPT_EULA=Y yum install -y msodbcsql17-17.2.0.1-1 mssql-tools-17.2.0.2-1 unixODBC-devel
-RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile && \
+    ACCEPT_EULA=Y yum install -y msodbcsql17-17.2.0.1-1 mssql-tools-17.2.0.2-1 unixODBC-devel  && \
+    echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile && \
     echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc  && \
-    source ~/.bashrc
+    source ~/.bashrc && \
+    ACCEPT_EULA=Y yum -y install php72-php-pdo \
+                    php72-php-sqlsrv && \
 
-RUN ACCEPT_EULA=Y yum -y install php72-php-pdo \
-                    php72-php-sqlsrv
+    yum reinstall -y ca-certificates && \
+    yum clean all && \
+    ln -s /opt/remi/php72/root/sbin/php-fpm /usr/sbin/php-fpm && \
+    sed -i '/^include=/c include=${CFG_INCLUDE}' /etc/opt/remi/php72/php-fpm.conf
 
-RUN yum reinstall -y ca-certificates
-RUN yum clean all 		   
-#RUN mkdir -p /var/log/php-fpm
-RUN ln -s /opt/remi/php72/root/sbin/php-fpm /usr/sbin/php-fpm
-RUN sed -i '/^listen =/c listen = 9000' /etc/opt/remi/php72/php-fpm.d/www.conf
-RUN sed -i '/^listen.allowed_clients/c;listen.allowed_clients ='  /etc/opt/remi/php72/php-fpm.d/www.conf
-RUN sed -i '/^php_admin_value\[error_log\]/c php_admin_value[error_log] = ${ERROR_LOG}' /etc/opt/remi/php72/php-fpm.d/www.conf
-#RUN ln -sf /dev/stderr /var/log/php-fpm/error.log
 CMD ["php-fpm", "--allow-to-run-as-root", "--nodaemonize"]
