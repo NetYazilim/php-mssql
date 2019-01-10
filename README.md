@@ -17,7 +17,7 @@ The following components are included:
 ## Settings
 CFG_INCLUDE environment varible for conf file. Default value is "/etc/opt/remi/php72/php-fpm.d/*.conf"
 
-### [exmple conf file](https://github.com/netyazilim/php-mssql/blob/master/www.conf)
+### exmple conf file: [www.conf](https://github.com/netyazilim/php-mssql/blob/master/www.conf)
 ```
 docker run -v c:\demo:/shared -p 9000:9000 -e CFG_INCLUDE=/shared/etc/php/*.conf netyazilim/php-mssql
 
