@@ -1,4 +1,4 @@
-# PHP 7.2 & pdo_sqlsrv
+# PHP 7.3 & pdo_sqlsrv
 
 This image provides an integrated development environment for PHP with connectivity to a remote SQL Server database.
 
