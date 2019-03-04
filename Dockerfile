@@ -30,7 +30,7 @@ RUN yum reinstall -y ca-certificates && \
     ACCEPT_EULA=Y yum -y install php73-php-sqlsrv && \
     yum clean all && \
     ln -s /opt/remi/php73/root/sbin/php-fpm /usr/sbin/php-fpm && \
-	sed -i '/^listen = /c listen = 9000' /etc/opt/remi/php73/php-fpm.conf && \
-	sed -i '/^listen.allowed_clients/c ;listen.allowed_clients' /etc/opt/remi/php73/php-fpm.conf && \	
+	sed -i '/^listen = /c listen = 9000' /etc/opt/remi/php73/php-fpm.d/www.conf && \
+	sed -i '/^listen.allowed_clients/c ;listen.allowed_clients' /etc/opt/remi/php73/php-fpm.d/www.conf && \	
     sed -i '/^include=/c include=${CFG_INCLUDE}' /etc/opt/remi/php73/php-fpm.conf
 CMD ["php-fpm", "--allow-to-run-as-root", "--nodaemonize"]
