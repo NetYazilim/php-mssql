@@ -14,6 +14,9 @@ The following components are included:
 - [Microsoft ODBC Driver 17.3 for Linux] (https://blogs.msdn.microsoft.com/sqlnativeclient/2019/02/22/odbc-driver-17-3-for-sql-server-released/)
 - [Microsoft Drivers for PHP for SQL Server 5.6] (https://docs.microsoft.com/en-us/sql/connect/php/release-notes-for-the-php-sql-driver?view=sql-server-2017)
 
+
+- https://pkgs.org/download/php73-php-sqlsrv
+
 ## Settings
 CFG_INCLUDE environment varible for conf file. Default value is "/etc/opt/remi/php72/php-fpm.d/*.conf"
 
